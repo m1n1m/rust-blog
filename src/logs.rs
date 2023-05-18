@@ -1,7 +1,12 @@
+use lazy_static::lazy_static;
 use slog;
-use slog::{Logger, o, Drain, info};
+use slog::{Logger, o, Drain};
 use slog_term;
 use slog_async;
+
+lazy_static! {
+    pub static ref LOGGER : Logger = configure_log();
+}
 
 pub(crate) fn configure_log() -> Logger {
     let decorator = slog_term::TermDecorator::new().build();

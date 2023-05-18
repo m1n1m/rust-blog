@@ -1,53 +1,59 @@
 
-mod handlers;
 mod models;
 mod schema;
 mod logs;
+mod database;
+mod modules;
 
+use std::sync::{Mutex, RwLock};
 use actix_web::HttpServer;
 use actix_web::App;
 use actix_web::middleware::Logger;
 use actix_web::web;
-use diesel::PgConnection;
-use diesel::r2d2::ConnectionManager;
+use actix_web::web::ServiceConfig;
 use slog::{info};
+use crate::database::{Database, DBPool};
+use crate::logs::LOGGER;
+use crate::modules::ModuleRegistry;
 
-pub type Pool = r2d2::Pool<ConnectionManager<PgConnection>>;
+// static DB_POOL_SINGLETONE: RwLock<Vec<DBPool>> = RwLock::new(Vec::new());
+//
+// fn set_db_pool(pool: DBPool) {
+//     DB_POOL_SINGLETONE.write().unwrap().push(pool.clone());
+// }
+
+// fn get_db_pool() -> &'static DBPool {
+//     DB_POOL_SINGLETONE.read().unwrap().get(0).unwrap()
+// }
 
 #[actix_rt::main]
 async fn main() -> std::io::Result<()> {
     dotenv::dotenv().ok();
     std::env::set_var("RUST_LOG", "actix_web=debug");
-    let database_url = std::env::var("DATABASE_URL").expect("DATABASE_URL must be set");
 
-    let log = logs::configure_log();
+    let database = Database::new();
+    let pool: DBPool = database.get_pool();
+    // set_db_pool(pool);
 
-    // create db connection pool
-    info!(log,
-        "Creating DB connection pool"
-    );
+    let server_url = std::env::var("SERVER_URL").unwrap();
 
-    let manager = ConnectionManager::<PgConnection>::new(database_url);
-    let pool = Pool::builder()
-        .build(manager)
-        .expect("Failed to create pool.");
+    info!(LOGGER, "Starting the server at {}", server_url);
 
-    info!(log,
-        "Starting the server at http://127.0.0.1:8080/"
-    );
+    static MODULE_REGISTRY: ModuleRegistry = ModuleRegistry {};
+
+    let configure_actix_main = |actix_cfg: &mut ServiceConfig| {
+        MODULE_REGISTRY.configure_actix(actix_cfg);
+    };
 
     // Start http server
     HttpServer::new(move || {
         App::new()
-            // .wrap(Logger::default())
-            .app_data(web::Data::new(log.clone()))
+            .wrap(Logger::default())
+            .app_data(web::Data::new(LOGGER.clone()))
             .app_data(web::Data::new(pool.clone()))
-            .route("/users", web::get().to(handlers::get_users))
-            .route("/users/{id}", web::get().to(handlers::get_user_by_id))
-            .route("/users", web::post().to(handlers::add_user))
-            .route("/users/{id}", web::delete().to(handlers::delete_user))
+            .configure(configure_actix_main)
     })
-        .bind("127.0.0.1:8080")?
+        .bind(server_url)?
         .run()
         .await
 }

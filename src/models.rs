@@ -1,10 +1,9 @@
 use derive_more::Display;
 use serde::{Deserialize, Serialize};
 use diesel::Queryable;
-use crate::schema::users;
 
 #[derive(Debug, Serialize, Deserialize, Queryable, Display)]
-#[diesel(table_name = users)]
+#[diesel(table_name = crate::schema::users)]
 #[display(fmt = "user_id: {}, name {}, login {}", user_id, name, login)]
 pub struct User {
     pub user_id: i32,
