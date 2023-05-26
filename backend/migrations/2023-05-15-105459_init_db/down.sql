@@ -1,0 +1,3 @@
+DROP TABLE users CASCADE;
+DROP TABLE blog_post CASCADE;
+DROP TABLE post_comment CASCADE;
