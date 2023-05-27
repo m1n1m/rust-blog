@@ -8,7 +8,6 @@ edition = "2021"
 [dependencies]
 diesel = { version = "2.0.4", default-features = false, features = ["postgres", "r2d2", "chrono", "uuid"] }
 diesel_migrations = "2.0.0"
-diesel_cli_ext = "0.3.10"
 postgres = "0.19.5"
 tokio = "1.28.1"
 tokio-postgres = "0.7.8"
@@ -35,6 +34,9 @@ lazy_static = "1.4.0"
 runtime_injector_actix = "0.2.0"
 async-trait = "0.1.68"
 ctor = "0.2.0"
-uuid = { version = "1.3.3", features = ["serde", "v4"] }
+#uuidv7 = { version = "1.1.2", package = "uuid", features = ["serde"] }
+#uuid = { version = "1.3.3", features = ["serde", "v4", "v7"] }
+#uuid = { version = "1.3.3", features = ["serde", "v4", "v7"] }
+uuid = { version = "=0.8.2", features = ["serde", "v4"] }
 aspect = "0.3.0"
 wrap = "0.1.0"

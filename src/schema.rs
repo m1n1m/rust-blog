@@ -2,8 +2,8 @@
 
 diesel::table! {
     blog_post (blog_post_id) {
-        blog_post_id -> Int4,
-        user_id -> Int4,
+        blog_post_id -> Uuid,
+        user_id -> Uuid,
         title -> Varchar,
         body -> Text,
     }
@@ -11,16 +11,16 @@ diesel::table! {
 
 diesel::table! {
     post_comment (post_comment_id) {
-        post_comment_id -> Int4,
+        post_comment_id -> Uuid,
         title -> Varchar,
         body -> Text,
-        blog_post_id -> Int4,
+        blog_post_id -> Uuid,
     }
 }
 
 diesel::table! {
     users (user_id) {
-        user_id -> Int4,
+        user_id -> Uuid,
         name -> Varchar,
         login -> Varchar,
         password -> Varchar,
