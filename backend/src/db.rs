@@ -1,5 +1,4 @@
 use diesel::{PgConnection};
-use diesel::connection::SimpleConnection;
 use diesel::r2d2::ConnectionManager;
 use diesel_migrations::{embed_migrations, EmbeddedMigrations, MigrationHarness};
 use lazy_static::lazy_static;
