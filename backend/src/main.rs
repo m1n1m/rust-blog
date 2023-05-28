@@ -10,10 +10,9 @@ mod tests;
 use actix_web::HttpServer;
 use actix_web::App;
 use actix_web::middleware::Logger;
-use slog::{info};
+use slog::info;
 use crate::logs::LOGGER;
 use crate::modules::users;
-use models::schema;
 
 #[actix_rt::main]
 async fn main() -> std::io::Result<()> {

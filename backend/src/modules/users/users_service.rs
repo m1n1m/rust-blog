@@ -3,8 +3,8 @@ use diesel::prelude::*;
 use uuid::Uuid;
 use crate::api_error::ApiError;
 use crate::db;
-use crate::schema::users;
-use crate::modules::users::service;
+use models::schema::users;
+use crate::modules::users::users_service;
 use models::users::{User, UserMessage};
 
 pub fn find_all() -> Result<Vec<User>, ApiError> {
@@ -26,7 +26,7 @@ pub fn find(id: Uuid) -> Result<User, ApiError> {
 pub fn create(user: UserMessage) -> Result<User, ApiError> {
     let mut conn = db::connection()?;
 
-    let user = service::from(user);
+    let user = users_service::from(user);
     let user = diesel::insert_into(users::table)
         .values(user)
         .get_result(&mut conn)
