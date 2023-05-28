@@ -20,5 +20,6 @@ fn App() -> Html {
 }
 
 fn main() {
+    backend::test();
     yew::Renderer::<App>::new().render();
 }
