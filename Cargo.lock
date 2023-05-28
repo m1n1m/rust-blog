@@ -858,6 +858,7 @@ dependencies = [
  "futures",
  "lazy_static",
  "log",
+ "models",
  "postgres",
  "r2d2",
  "reqwest",
@@ -1445,7 +1446,7 @@ dependencies = [
 name = "frontend"
 version = "0.1.0"
 dependencies = [
- "backend",
+ "models",
  "yew",
 ]
 
@@ -2306,6 +2307,18 @@ dependencies = [
  "net2",
  "winapi 0.2.8",
  "ws2_32-sys",
+]
+
+[[package]]
+name = "models"
+version = "0.1.0"
+dependencies = [
+ "derive_more",
+ "diesel",
+ "serde",
+ "serde_derive",
+ "serde_json",
+ "uuid",
 ]
 
 [[package]]

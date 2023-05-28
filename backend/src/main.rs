@@ -1,5 +1,4 @@
 
-mod schema;
 mod logs;
 mod db;
 mod modules;
@@ -14,6 +13,7 @@ use actix_web::middleware::Logger;
 use slog::{info};
 use crate::logs::LOGGER;
 use crate::modules::users;
+use models::schema;
 
 #[actix_rt::main]
 async fn main() -> std::io::Result<()> {

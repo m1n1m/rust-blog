@@ -44,10 +44,10 @@ pub fn init() {
 #[cfg(test)]
 pub fn before_test() {
 
-    let mut conn = connection().expect("Failed to get db connection");
-    // conn.batch_execute("DROP SCHEMA IF EXISTS public CASCADE").unwrap();
-    conn.batch_execute("CREATE SCHEMA IF NOT EXISTS public").unwrap();
-    run_migration(&mut conn);
+    // let mut conn = connection().expect("Failed to get db connection");
+    // // conn.batch_execute("DROP SCHEMA IF EXISTS public CASCADE").unwrap();
+    // conn.batch_execute("CREATE SCHEMA IF NOT EXISTS public").unwrap();
+    // run_migration(&mut conn);
 
     // // let mut client = DB_POOL.get().unwrap();
     // client.batch_execute("DROP SCHEMA IF EXISTS public CASCADE");

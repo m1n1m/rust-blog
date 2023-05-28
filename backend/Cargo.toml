@@ -14,7 +14,14 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-diesel = { version = "2.1.0", default-features = false, features = ["postgres", "r2d2", "chrono", "uuid"] }
+models = { version = "0.1.0", path = "../models" }
+diesel = { workspace = true }
+uuid = { workspace = true }
+derive_more = { workspace = true }
+serde = { workspace = true }
+serde_derive = { workspace = true }
+serde_json = { workspace = true }
+
 diesel_migrations = "2.1.0"
 postgres = "0.19.5"
 tokio = "1.28.1"
@@ -22,13 +29,9 @@ tokio-postgres = "0.7.8"
 actix-web = "4.3.1"
 actix-web-httpauth = { git = "https://github.com/actix/actix-web-httpauth" }
 chrono = { version = "0.4.10", features = ["serde"] }
-derive_more = "0.99.2"
 dotenv = "0.15.0"
 futures = "0.3.1"
 r2d2 = "0.8.8"
-serde = "1.0"
-serde_derive = "1.0"
-serde_json = "1.0"
 actix-service = "2.0.2"
 alcoholic_jwt = "4091.0.0"
 reqwest = "0.11.17"
@@ -42,6 +45,5 @@ lazy_static = "1.4.0"
 runtime_injector_actix = "0.2.0"
 async-trait = "0.1.68"
 ctor = "0.2.0"
-uuid = { version = "=0.8.2", features = ["serde", "v4"] }
 aspect = "0.3.0"
 wrap = "0.1.0"
